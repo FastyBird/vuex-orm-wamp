@@ -24,7 +24,7 @@ export function Model(model: typeof BaseModel, config: GlobalConfig): void {
   Object.assign(model, { wampConfig: {} })
 
   /**
-   * Set the given api client
+   * Set the given wamp client
    */
   Object.assign(model, {
     setWamp: (instance: WampClientInterface): void => {
