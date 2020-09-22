@@ -5,9 +5,6 @@ import { GlobalConfig } from '@/lib/contracts/Config'
 import { Request } from '@/lib/client/Request'
 
 export function Model(model: typeof BaseModel, config: GlobalConfig): void {
-  // @ts-ignore
-  const that = this
-
   /**
    * The wamp client
    */
@@ -37,7 +34,8 @@ export function Model(model: typeof BaseModel, config: GlobalConfig): void {
    */
   Object.assign(model, {
     wamp: (): Request => {
-      return new Request(that)
+      // @ts-ignore
+      return new Request(this)
     },
   })
 }

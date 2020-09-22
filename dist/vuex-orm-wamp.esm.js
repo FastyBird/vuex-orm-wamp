@@ -81,12 +81,9 @@ class Request {
 }
 
 function Model(model, config) {
-  // @ts-ignore
-  const that = this;
   /**
    * The wamp client
    */
-
   Object.assign(model, {
     wampInstance: config.wamp || null
   });
@@ -105,7 +102,7 @@ function Model(model, config) {
     wampConfig: {}
   });
   /**
-   * Set the given api client
+   * Set the given wamp client
    */
 
   Object.assign(model, {
@@ -121,7 +118,8 @@ function Model(model, config) {
 
   Object.assign(model, {
     wamp: () => {
-      return new Request(that);
+      // @ts-ignore
+      return new Request(this);
     }
   });
 }

@@ -142,12 +142,11 @@ function _objectSpread2(target) {
 
   return Request;
 }();function Model(model, config) {
-  // @ts-ignore
-  var that = this;
+  var _this = this;
+
   /**
    * The wamp client
    */
-
   Object.assign(model, {
     wampInstance: config.wamp || null
   });
@@ -166,7 +165,7 @@ function _objectSpread2(target) {
     wampConfig: {}
   });
   /**
-   * Set the given api client
+   * Set the given wamp client
    */
 
   Object.assign(model, {
@@ -182,7 +181,8 @@ function _objectSpread2(target) {
 
   Object.assign(model, {
     wamp: function wamp() {
-      return new Request(that);
+      // @ts-ignore
+      return new Request(_this);
     }
   });
 }var Plugin = /*#__PURE__*/function () {

@@ -1,7 +1,6 @@
 // rollup.config.js
 import fs from 'fs';
 import path from 'path';
-import vue from 'rollup-plugin-vue';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
@@ -24,7 +23,7 @@ const baseConfig = {
   plugins: {
     preVue: [
       alias({
-        resolve: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
+        resolve: ['.js', '.jsx', '.ts', '.tsx'],
         entries: {
           '@': path.resolve(projectRoot, 'src'),
         },
@@ -34,15 +33,9 @@ const baseConfig = {
       'process.env.NODE_ENV': JSON.stringify('production'),
       'process.env.ES_BUILD': JSON.stringify('false'),
     },
-    vue: {
-      css: true,
-      template: {
-        isProduction: true,
-      },
-    },
     babel: {
       exclude: 'node_modules/**',
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
   },
 };
@@ -53,6 +46,7 @@ const external = [
   // list external dependencies, exactly the way it is written in the import statement.
   // eg. 'jquery'
   'vue',
+  'vuex',
 ];
 
 // UMD/IIFE shared settings: output.globals
@@ -61,6 +55,7 @@ const globals = {
   // Provide global variable names to replace your external imports
   // eg. jquery: '$'
   vue: 'Vue',
+  vuex: 'Vuex',
 };
 
 // Customize configs for individual targets
@@ -80,7 +75,6 @@ if (!argv.format || argv.format === 'es') {
         'process.env.ES_BUILD': JSON.stringify('true'),
       }),
       ...baseConfig.plugins.preVue,
-      vue(baseConfig.plugins.vue),
       babel({
         ...baseConfig.plugins.babel,
         presets: [
@@ -113,13 +107,6 @@ if (!argv.format || argv.format === 'cjs') {
     plugins: [
       replace(baseConfig.plugins.replace),
       ...baseConfig.plugins.preVue,
-      vue({
-        ...baseConfig.plugins.vue,
-        template: {
-          ...baseConfig.plugins.vue.template,
-          optimizeSSR: true,
-        },
-      }),
       babel(baseConfig.plugins.babel),
       commonjs(),
     ],
@@ -142,7 +129,6 @@ if (!argv.format || argv.format === 'iife') {
     plugins: [
       replace(baseConfig.plugins.replace),
       ...baseConfig.plugins.preVue,
-      vue(baseConfig.plugins.vue),
       babel(baseConfig.plugins.babel),
       commonjs(),
       terser({
