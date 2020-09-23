@@ -20,5 +20,6 @@ export interface ComponentsInterface {
 }
 
 export interface ClientInterface {
-  call(data: any, config: RpCallConfigInterface): RpCallPromise<RpCallResponse>
+  publish(data: any, config?: PublishConfigInterface): boolean
+  call(data: any, config?: RpCallConfigInterface): RpCallPromise<RpCallResponse>
 }
