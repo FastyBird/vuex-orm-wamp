@@ -187,7 +187,7 @@ function _objectSpread2(target) {
       Object.assign(this.model, {
         wamp: function wamp() {
           // @ts-ignore
-          return new Client(_this);
+          return new Client(_this.model);
         }
       });
     }

@@ -121,7 +121,7 @@ class Plugin {
     Object.assign(this.model, {
       wamp: () => {
         // @ts-ignore
-        return new Client(this);
+        return new Client(this.model);
       }
     });
   }
