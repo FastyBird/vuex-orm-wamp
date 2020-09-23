@@ -13,13 +13,9 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-class Request {
+class Client {
   /**
    * The model class
-   */
-
-  /**
-   * The default config
    */
 
   /**
@@ -27,10 +23,6 @@ class Request {
    */
   constructor(model) {
     _defineProperty(this, "model", void 0);
-
-    _defineProperty(this, "config", {
-      topic: ''
-    });
 
     this.model = model;
   }
@@ -51,8 +43,14 @@ class Request {
    */
 
 
-  publish(data = {}, config = {}) {
-    const requestConfig = this.createConfig(config);
+  publish(data = {}, config) {
+    const requestConfig = { ...{
+        topic: ''
+      },
+      ...this.model.globalWampConfig,
+      ...this.model.wampConfig,
+      ...config
+    };
     return this.wamp.publish(requestConfig.topic, data);
   }
   /**
@@ -60,68 +58,17 @@ class Request {
    */
 
 
-  call(data = {}, config = {}) {
-    const requestConfig = this.createConfig(config);
-    return this.wamp.call(requestConfig.topic, data);
-  }
-  /**
-   * Create a new config by merging the global config, the model config,
-   * and the given config
-   */
-
-
-  createConfig(config) {
-    return { ...this.config,
+  call(data = {}, config) {
+    const requestConfig = { ...{
+        topic: ''
+      },
       ...this.model.globalWampConfig,
       ...this.model.wampConfig,
       ...config
     };
+    return this.wamp.call(requestConfig.topic, data);
   }
 
-}
-
-function Model(model, config) {
-  /**
-   * The wamp client
-   */
-  Object.assign(model, {
-    wampInstance: config.wamp || null
-  });
-  /**
-   * The global wamp configuration for all models
-   */
-
-  Object.assign(model, {
-    globalWampConfig: config
-  });
-  /**
-   * The wamp configuration for the model
-   */
-
-  Object.assign(model, {
-    wampConfig: {}
-  });
-  /**
-   * Set the given wamp client
-   */
-
-  Object.assign(model, {
-    setWamp: instance => {
-      Object.assign(model, {
-        wampInstance: instance
-      });
-    }
-  });
-  /**
-   * Get the wamp client instance
-   */
-
-  Object.assign(model, {
-    wamp: () => {
-      // @ts-ignore
-      return new Request(this);
-    }
-  });
 }
 
 class Plugin {
@@ -150,7 +97,33 @@ class Plugin {
 
 
   plugin() {
-    Model(this.model, this.config);
+    // The wamp client
+    Object.assign(this.model, {
+      wampInstance: this.config.wamp || null
+    }); // The global wamp configuration for all models
+
+    Object.assign(this.model, {
+      globalWampConfig: this.config
+    }); // The wamp configuration for the model
+
+    Object.assign(this.model, {
+      wampConfig: {}
+    }); // Set the given wamp client
+
+    Object.assign(this.model, {
+      setWamp: instance => {
+        Object.assign(this.model, {
+          wampInstance: instance
+        });
+      }
+    }); // Get the wamp client instance
+
+    Object.assign(this.model, {
+      wamp: () => {
+        // @ts-ignore
+        return new Client(this);
+      }
+    });
   }
 
 }
@@ -163,6 +136,6 @@ const install = function installVuexOrmWamp(components, config) {
 
 const plugin = {
   install
-}; // Default export is library as a whole, registered via Vue.use()
+};
 
 export default plugin;

@@ -1,11 +1,10 @@
 import { WampClientInterface } from '@fastybird/vue-wamp-v1'
 
-import { Config, GlobalConfig } from '@/lib/contracts/Config';
-import { Request } from '@/lib/client/Request';
+import { ClientInterface, GlobalConfigInterface } from './src/lib/types';
 
 export default VuexOrmWamp;
 
-export {Config, GlobalConfig} from '@/lib/contracts/Config';
+export {GlobalConfigInterface};
 
 declare module '@vuex-orm/core' {
   namespace Model {
@@ -17,12 +16,12 @@ declare module '@vuex-orm/core' {
     /**
      * The global wamp configuration for all models
      */
-    let globalWampConfig: GlobalConfig;
+    let globalWampConfig: GlobalConfigInterface;
 
     /**
      * The wamp configuration for the model
      */
-    let wampConfig: Config;
+    let wampConfig: GlobalConfigInterface;
 
     /**
      * Set the given wamp client
@@ -32,6 +31,6 @@ declare module '@vuex-orm/core' {
     /**
      * Get the wamp client instance
      */
-    function wamp(): Request;
+    function wamp(): ClientInterface;
   }
 }

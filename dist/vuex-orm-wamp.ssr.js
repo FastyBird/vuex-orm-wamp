@@ -67,26 +67,18 @@ function _objectSpread2(target) {
   }
 
   return target;
-}var Request = /*#__PURE__*/function () {
+}var Client = /*#__PURE__*/function () {
   /**
    * The model class
    */
 
   /**
-   * The default config
-   */
-
-  /**
    * Create a new client instance
    */
-  function Request(model) {
-    _classCallCheck(this, Request);
+  function Client(model) {
+    _classCallCheck(this, Client);
 
     _defineProperty(this, "model", void 0);
-
-    _defineProperty(this, "config", {
-      topic: ''
-    });
 
     this.model = model;
   }
@@ -95,7 +87,7 @@ function _objectSpread2(target) {
    */
 
 
-  _createClass(Request, [{
+  _createClass(Client, [{
     key: "publish",
 
     /**
@@ -103,8 +95,12 @@ function _objectSpread2(target) {
      */
     value: function publish() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var requestConfig = this.createConfig(config);
+      var config = arguments.length > 1 ? arguments[1] : undefined;
+
+      var requestConfig = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, {
+        topic: ''
+      }), this.model.globalWampConfig), this.model.wampConfig), config);
+
       return this.wamp.publish(requestConfig.topic, data);
     }
     /**
@@ -115,19 +111,13 @@ function _objectSpread2(target) {
     key: "call",
     value: function call() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var requestConfig = this.createConfig(config);
-      return this.wamp.call(requestConfig.topic, data);
-    }
-    /**
-     * Create a new config by merging the global config, the model config,
-     * and the given config
-     */
+      var config = arguments.length > 1 ? arguments[1] : undefined;
 
-  }, {
-    key: "createConfig",
-    value: function createConfig(config) {
-      return _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, this.config), this.model.globalWampConfig), this.model.wampConfig), config);
+      var requestConfig = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, {
+        topic: ''
+      }), this.model.globalWampConfig), this.model.wampConfig), config);
+
+      return this.wamp.call(requestConfig.topic, data);
     }
   }, {
     key: "wamp",
@@ -140,52 +130,8 @@ function _objectSpread2(target) {
     }
   }]);
 
-  return Request;
-}();function Model(model, config) {
-  var _this = this;
-
-  /**
-   * The wamp client
-   */
-  Object.assign(model, {
-    wampInstance: config.wamp || null
-  });
-  /**
-   * The global wamp configuration for all models
-   */
-
-  Object.assign(model, {
-    globalWampConfig: config
-  });
-  /**
-   * The wamp configuration for the model
-   */
-
-  Object.assign(model, {
-    wampConfig: {}
-  });
-  /**
-   * Set the given wamp client
-   */
-
-  Object.assign(model, {
-    setWamp: function setWamp(instance) {
-      Object.assign(model, {
-        wampInstance: instance
-      });
-    }
-  });
-  /**
-   * Get the wamp client instance
-   */
-
-  Object.assign(model, {
-    wamp: function wamp() {
-      // @ts-ignore
-      return new Request(_this);
-    }
-  });
-}var Plugin = /*#__PURE__*/function () {
+  return Client;
+}();var Plugin = /*#__PURE__*/function () {
   /**
    * The model class
    */
@@ -215,7 +161,35 @@ function _objectSpread2(target) {
   _createClass(Plugin, [{
     key: "plugin",
     value: function plugin() {
-      Model(this.model, this.config);
+      var _this = this;
+
+      // The wamp client
+      Object.assign(this.model, {
+        wampInstance: this.config.wamp || null
+      }); // The global wamp configuration for all models
+
+      Object.assign(this.model, {
+        globalWampConfig: this.config
+      }); // The wamp configuration for the model
+
+      Object.assign(this.model, {
+        wampConfig: {}
+      }); // Set the given wamp client
+
+      Object.assign(this.model, {
+        setWamp: function setWamp(instance) {
+          Object.assign(_this.model, {
+            wampInstance: instance
+          });
+        }
+      }); // Get the wamp client instance
+
+      Object.assign(this.model, {
+        wamp: function wamp() {
+          // @ts-ignore
+          return new Client(_this);
+        }
+      });
     }
   }]);
 
@@ -228,5 +202,4 @@ var install = function installVuexOrmWamp(components, config) {
 
 var plugin = {
   install: install
-}; // Default export is library as a whole, registered via Vue.use()
-exports.default=plugin;
+};exports.default=plugin;

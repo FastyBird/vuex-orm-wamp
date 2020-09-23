@@ -1,8 +1,8 @@
-import { Model } from '@vuex-orm/core'
+import {Model} from '@vuex-orm/core'
 
-import { Components } from '@/lib/contracts/Components'
-import { GlobalConfig } from '@/lib/contracts/Config'
-import { Model as ModelMixin } from '@/lib/mixins/Model'
+import {ClientInterface, GlobalConfigInterface, ComponentsInterface} from '@/lib/types'
+import {WampClientInterface} from "@fastybird/vue-wamp-v1";
+import Client from "@/lib/client";
 
 export default class Plugin {
   /**
@@ -13,12 +13,12 @@ export default class Plugin {
   /**
    * The global configuration object
    */
-  config: GlobalConfig
+  config: GlobalConfigInterface
 
   /**
    * Create a new Vuex ORM WAMP instance
    */
-  constructor(components: Components, config: GlobalConfig) {
+  constructor(components: ComponentsInterface, config: GlobalConfigInterface) {
     this.model = components.Model
     this.config = config
   }
@@ -27,6 +27,28 @@ export default class Plugin {
    * Plug-in features
    */
   plugin(): void {
-    ModelMixin(this.model, this.config)
+    // The wamp client
+    Object.assign(this.model, {wampInstance: this.config.wamp || null})
+
+    // The global wamp configuration for all models
+    Object.assign(this.model, {globalWampConfig: this.config})
+
+    // The wamp configuration for the model
+    Object.assign(this.model, {wampConfig: {}})
+
+    // Set the given wamp client
+    Object.assign(this.model, {
+      setWamp: (instance: WampClientInterface): void => {
+        Object.assign(this.model, {wampInstance: instance})
+      },
+    })
+
+    // Get the wamp client instance
+    Object.assign(this.model, {
+      wamp: (): ClientInterface => {
+        // @ts-ignore
+        return new Client(this)
+      },
+    })
   }
 }

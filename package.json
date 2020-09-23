@@ -36,8 +36,7 @@
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
@@ -63,8 +62,8 @@
     "vuex": "^3.5.1"
   },
   "peerDependencies": {
-    "@vuex-orm/core": ">=0.34.0",
-    "@fastybird/vue-wamp-v1": "https://github.com/FastyBird/vue-wamp-v1.git"
+    "@fastybird/vue-wamp-v1": "https://github.com/FastyBird/vue-wamp-v1.git",
+    "@vuex-orm/core": ">=0.34.0"
   },
   "engines": {
     "node": ">=10"

@@ -1,10 +1,8 @@
-import {Components} from "@/lib/contracts/Components";
-
 import Plugin from "@/lib/plugin";
-import {Config} from "@/lib/contracts/Config";
+import {ComponentsInterface, GlobalConfigInterface} from "@/lib/types";
 
 // install function executed by VuexORM.use()
-const install = function installVuexOrmWamp(components: Components, config: Config) {
+const install = function installVuexOrmWamp(components: ComponentsInterface, config: GlobalConfigInterface) {
     new Plugin(components, config).plugin();
 };
 
@@ -13,6 +11,4 @@ const plugin = {
     install,
 };
 
-// Default export is library as a whole, registered via Vue.use()
 export default plugin;
-
