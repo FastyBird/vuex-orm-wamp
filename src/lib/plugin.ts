@@ -47,7 +47,7 @@ export default class Plugin {
     Object.assign(this.model, {
       wamp: (): ClientInterface => {
         // @ts-ignore
-        return new Client(this)
+        return new Client(this.model)
       },
     })
   }
