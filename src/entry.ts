@@ -1,5 +1,5 @@
 import Plugin from "@/lib/plugin";
-import {ComponentsInterface, GlobalConfigInterface} from "@/lib/types";
+import {ComponentsInterface, GlobalConfigInterface} from "@/lib/types.d.ts";
 
 // install function executed by VuexORM.use()
 const install = function installVuexOrmWamp(components: ComponentsInterface, config: GlobalConfigInterface) {

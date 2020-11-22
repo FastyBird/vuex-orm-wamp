@@ -1,6 +1,6 @@
 import {Model} from '@vuex-orm/core'
 
-import {ClientInterface, GlobalConfigInterface, ComponentsInterface} from '@/lib/types'
+import {ClientInterface, GlobalConfigInterface, ComponentsInterface} from '@/lib/types.d.ts'
 import {WampClientInterface} from "@fastybird/vue-wamp-v1";
 import Client from "@/lib/client";
 

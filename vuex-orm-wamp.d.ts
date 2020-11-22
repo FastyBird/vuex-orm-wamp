@@ -1,7 +1,7 @@
 import {WampClientInterface} from '@fastybird/vue-wamp-v1'
 
 import VuexOrmWamp from './src/lib/plugin';
-import {ClientInterface, GlobalConfigInterface} from './src/lib/types';
+import {ClientInterface, GlobalConfigInterface} from '@/lib/types';
 
 export default VuexOrmWamp;
 
