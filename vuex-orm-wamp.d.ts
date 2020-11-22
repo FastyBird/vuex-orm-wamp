@@ -1,11 +1,34 @@
-import {WampClientInterface} from '@fastybird/vue-wamp-v1'
+import { RpCallPromise, RpCallResponse, WampClientInterface } from '@fastybird/vue-wamp-v1'
+
+import { Model } from '@vuex-orm/core'
 
 import VuexOrmWamp from './src/lib/plugin';
-import {ClientInterface, GlobalConfigInterface} from '@/lib/types';
+
+export interface GlobalConfigInterface {
+  wamp?: WampClientInterface
+}
+
+export interface PublishConfigInterface extends GlobalConfigInterface {
+  topic: string
+  exclude?: Array<string> | null
+  eligible?: Array<string> | null
+}
+
+export interface RpCallConfigInterface extends GlobalConfigInterface {
+  topic: string
+}
+
+export interface ComponentsInterface {
+  Model: typeof Model
+}
+
+export interface ClientInterface {
+  publish(data: any, config?: PublishConfigInterface): boolean
+
+  call(data: any, config?: RpCallConfigInterface): RpCallPromise<RpCallResponse>
+}
 
 export default VuexOrmWamp;
-
-export {GlobalConfigInterface};
 
 declare module '@vuex-orm/core' {
   namespace Model {
