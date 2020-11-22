@@ -1,5 +1,5 @@
-import {WampClientInterface, RpCallPromise, RpCallResponse} from '@fastybird/vue-wamp-v1'
-import {Model} from '@vuex-orm/core'
+import { WampClientInterface, RpCallPromise, RpCallResponse } from '@fastybird/vue-wamp-v1'
+import { Model } from '@vuex-orm/core'
 
 import { ClientInterface, PublishConfigInterface, RpCallConfigInterface } from '../../vuex-orm-wamp'
 
@@ -35,7 +35,7 @@ export default class Client implements ClientInterface {
   publish(data: any = {}, config?: PublishConfigInterface): boolean {
     const requestConfig: PublishConfigInterface = {
       ...{
-        topic: ''
+        topic: '',
       },
       ...this.model.globalWampConfig,
       ...this.model.wampConfig,
@@ -51,7 +51,7 @@ export default class Client implements ClientInterface {
   call(data: any = {}, config?: RpCallConfigInterface): RpCallPromise<RpCallResponse> {
     const requestConfig: RpCallConfigInterface = {
       ...{
-        topic: ''
+        topic: '',
       },
       ...this.model.globalWampConfig,
       ...this.model.wampConfig,

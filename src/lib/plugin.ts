@@ -1,10 +1,10 @@
-import {Model} from '@vuex-orm/core'
+import { Model } from '@vuex-orm/core'
 
-import {WampClientInterface} from "@fastybird/vue-wamp-v1";
+import { WampClientInterface } from '@fastybird/vue-wamp-v1';
 
-import Client from "@/lib/client";
+import Client from '@/lib/client';
 
-import { ClientInterface, ComponentsInterface, GlobalConfigInterface } from "../../vuex-orm-wamp"
+import { ClientInterface, ComponentsInterface, GlobalConfigInterface } from '../../vuex-orm-wamp'
 
 export default class Plugin {
   /**
