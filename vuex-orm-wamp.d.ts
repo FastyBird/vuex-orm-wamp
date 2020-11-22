@@ -1,8 +1,6 @@
-import { RpCallPromise, RpCallResponse, WampClientInterface } from '@fastybird/vue-wamp-v1'
+import { RpCallPromise, RpCallResponse, WampClientInterface } from '@fastybird/vue-wamp-v1';
 
-import { Model } from '@vuex-orm/core'
-
-import VuexOrmWamp from './src/lib/plugin';
+import { Model } from '@vuex-orm/core';
 
 export interface GlobalConfigInterface {
   wamp?: WampClientInterface
@@ -27,8 +25,6 @@ export interface ClientInterface {
 
   call(data: any, config?: RpCallConfigInterface): RpCallPromise<RpCallResponse>
 }
-
-export default VuexOrmWamp;
 
 declare module '@vuex-orm/core' {
   namespace Model {
