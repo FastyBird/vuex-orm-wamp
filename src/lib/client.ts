@@ -1,7 +1,7 @@
 import { WampClientInterface, RpCallPromise, RpCallResponse } from '@fastybird/vue-wamp-v1'
 import { Model } from '@vuex-orm/core'
 
-import { ClientInterface, PublishConfigInterface, RpCallConfigInterface } from '../../vuex-orm-wamp'
+import { ClientInterface, PublishConfigInterface, RpCallConfigInterface } from '@/lib/types'
 
 export default class Client implements ClientInterface {
   /**
