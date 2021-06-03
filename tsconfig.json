@@ -4,7 +4,8 @@
         "module": "esnext",
         "strict": true,
         "declaration": true,
-        "declarationDir": "dist",
+        "declarationDir": "dist/dts",
+        "emitDeclarationOnly": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "importHelpers": true,
@@ -16,7 +17,10 @@
         "baseUrl": ".",
         "types": [
             "node",
-            "vue"
+            "vue",
+            "@nuxt/types",
+            "@vuex-orm/core",
+            "@fastybird/vue-wamp-v1"
         ],
         "paths": {
             "@/*": [
