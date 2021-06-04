@@ -2,7 +2,7 @@
 
 [![Latest stable](https://badgen.net/npm/v/@fastybird/vuex-orm-wamp?cache=300&style=flast-square)](https://www.npmjs.com/package/@fastybird/vuex-orm-wamp)
 [![Downloads total](https://badgen.net/npm/dt/@fastybird/vuex-orm-wamp?cache=300&style=flast-square)](https://www.npmjs.com/package/@fastybird/vuex-orm-wamp)
-[![Licence](https://badgen.net/npm/license/@fastybird/vuex-orm-wamp?cache=300&style=flast-square)](https://www.npmjs.com/package/@fastybird/vuex-orm-wamp)
+[![Licence](https://badgen.net/npm/license/@fastybird/vuex-orm-wamp?cache=300&style=flast-square)](https://github.com/FastyBird/vuex-orm-wamp/blob/master/LICENSE.md)
 ![Types](https://badgen.net/npm/types/@fastybird/vuex-orm-wamp?cache=300&style=flast-square)
 
 ## What is FastyBird Vuex ORM WAMPv1 websocket client plugin?
