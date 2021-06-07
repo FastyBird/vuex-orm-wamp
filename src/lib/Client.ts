@@ -1,4 +1,4 @@
-import { WampClientInterface, RpCallPromise, RpCallResponse } from '@fastybird/vue-wamp-v1'
+import { WampClientInterface, RpCallResponse } from '@fastybird/vue-wamp-v1'
 import { Model } from '@vuex-orm/core'
 
 import { ClientInterface, PublishConfigInterface, RpCallConfigInterface } from '@/types/vuex-orm-wamp'
@@ -48,7 +48,7 @@ export default class Client implements ClientInterface {
   /**
    * Perform a call request
    */
-  call(data: any = {}, config?: RpCallConfigInterface): RpCallPromise<RpCallResponse> {
+  call<T>(data: any = {}, config?: RpCallConfigInterface): Promise<RpCallResponse<T>> {
     const requestConfig: RpCallConfigInterface = {
       ...{
         topic: '',

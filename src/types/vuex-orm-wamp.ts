@@ -1,52 +1,53 @@
-import { Model } from '@vuex-orm/core';
-import { Plugin } from '@vuex-orm/core/dist/src/plugins/use';
+import { Model } from '@vuex-orm/core'
+import { Plugin } from '@vuex-orm/core/dist/src/plugins/use'
 
-import { RpCallPromise, RpCallResponse, WampClientInterface } from '@fastybird/vue-wamp-v1';
+import { RpCallResponse, WampClientInterface } from '@fastybird/vue-wamp-v1'
 
 export interface InstallFunction extends Plugin {
-    installed?: boolean;
+  installed?: boolean;
 }
 
 export interface GlobalConfigInterface {
-    wamp?: WampClientInterface
+  wamp?: WampClientInterface
 }
 
 export interface PublishConfigInterface extends GlobalConfigInterface {
-    topic: string
-    exclude?: Array<string> | null
-    eligible?: Array<string> | null
+  topic: string
+  exclude?: string[] | null
+  eligible?: string[] | null
 }
 
 export interface RpCallConfigInterface extends GlobalConfigInterface {
-    topic: string
+  topic: string
 }
 
 export interface ComponentsInterface {
-    Model: typeof Model
+  Model: typeof Model
 }
 
 export interface ClientInterface {
-    publish(data: any, config?: PublishConfigInterface): boolean
+  publish(data: any, config?: PublishConfigInterface): boolean
 
-    call(data: any, config?: RpCallConfigInterface): RpCallPromise<RpCallResponse>
+  call<T>(data: any, config?: RpCallConfigInterface): Promise<RpCallResponse<T>>
 }
 
 declare module '@vuex-orm/core' {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Model {
     /**
      * The wamp client
      */
-    let wampInstance: WampClientInterface | null;
+    let wampInstance: WampClientInterface | null
 
     /**
      * The global wamp configuration for all models
      */
-    let globalWampConfig: GlobalConfigInterface;
+    let globalWampConfig: GlobalConfigInterface
 
     /**
      * The wamp configuration for the model
      */
-    let wampConfig: GlobalConfigInterface;
+    let wampConfig: GlobalConfigInterface
 
     /**
      * Set the given wamp client
