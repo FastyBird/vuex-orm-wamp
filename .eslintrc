@@ -11,7 +11,6 @@
     "plugin:json/recommended"
   ],
   "ignorePatterns": [
-    "babel.config.js",
     "build/*"
   ],
   "rules": {
